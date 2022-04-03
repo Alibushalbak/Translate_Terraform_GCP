@@ -1,0 +1,31 @@
+ git clone https://github.com/googlecodelabs/cloud-nebulous-serverless.git  on terminal
+
+cd cloud/python ==>nano Dockerfile ==>python 3
+
+docker build .
+
+docker build -t gcr.io/devops102-analiza/ali_translate .
+
+docker push gcr.io/devops102-analiza/ali_translate
+
+
+
+resource "google_cloud_run_service" "default" {
+  name     = "cloudrun-srv"
+  location = "us-central1"
+
+  template {
+    spec {
+      containers {
+        image = "us-docker.pkg.dev/cloudrun/container/hello"
+      }
+    }
+  }
+
+  traffic {
+    percent         = 100
+    latest_revision = true
+  }
+}
+
+
